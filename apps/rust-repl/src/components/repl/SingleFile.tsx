@@ -3,7 +3,12 @@ import { useStore } from '@tanstack/react-store'
 import { hydrateScratch, scratchActions, scratchStore } from '#/state/scratch'
 import { RustEditor } from './codemirror/RustEditor'
 import { CellOutput } from './CellOutput'
-import { Button } from '#/components/ui/button'
+import { Button } from '@workspace/ui/button'
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '#/components/ui/resizable'
 import { cancelScratch, runScratch } from '#/lib/runner'
 import { buildShareLink, consumeShareLink } from '#/lib/shareLink'
 import { registerSW } from '#/lib/registerSW'
@@ -39,7 +44,7 @@ export function SingleFile() {
   }
 
   return (
-    <div className="overflow-hidden border-x border-[var(--rule)] bg-[var(--surface-strong)] backdrop-blur-sm">
+    <div className="flex h-[calc(100vh-14rem)] min-h-[480px] flex-col overflow-hidden border-x border-[var(--rule)] bg-[var(--surface-strong)] backdrop-blur-sm">
       <Toolbar
         busy={busy}
         copied={copied}
@@ -52,8 +57,12 @@ export function SingleFile() {
         }}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="h-[clamp(360px,calc(100vh-18rem),720px)] border-b border-[var(--rule)] lg:border-b-0 lg:border-r">
+      <ResizablePanelGroup
+        orientation="horizontal"
+        id="foundry-scratch-split"
+        className="min-h-0 flex-1"
+      >
+        <ResizablePanel defaultSize={60} minSize={25} className="overflow-hidden">
           <RustEditor
             value={state.source}
             onChange={scratchActions.updateSource}
@@ -61,12 +70,14 @@ export function SingleFile() {
             onRunAndAdd={run}
             disabled={busy}
           />
-        </div>
+        </ResizablePanel>
 
-        <div className="h-[clamp(360px,calc(100vh-18rem),720px)] overflow-auto">
+        <ResizableHandle />
+
+        <ResizablePanel defaultSize={40} minSize={20} className="overflow-auto">
           <OutputPanel />
-        </div>
-      </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
 
       <StatusBar />
     </div>
@@ -85,7 +96,7 @@ type ToolbarProps = {
 
 function Toolbar({ busy, copied, onRun, onStop, onShare, onClear, onReset }: ToolbarProps) {
   return (
-    <div className="sticky top-14 z-20 -mx-px flex items-center gap-3 border-y border-[var(--rule)] bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] px-6 py-2.5 backdrop-blur">
+    <div className="flex shrink-0 items-center gap-3 border-y border-[var(--rule)] bg-[var(--paper-tinted)] px-6 py-2.5">
       <div className="flex items-baseline gap-2">
         <span className="display-italic text-[1.15rem] leading-none text-[var(--ink)]">
           Editor

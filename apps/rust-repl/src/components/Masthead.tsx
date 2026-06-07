@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import ThemeToggle from './ThemeToggle'
+import ThemeToggle from '@workspace/ui/theme-toggle'
 import { ModeTabs } from './ModeTabs'
 
 const GITHUB_URL = 'https://github.com/insanenaman/foundry-rs'
@@ -8,8 +8,15 @@ export default function Masthead() {
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--rule)] bg-[color-mix(in_oklab,var(--paper)_88%,transparent)] backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1480px] items-center gap-6 px-4 sm:px-6">
-        <Link to="/" className="group flex items-baseline gap-2 no-underline" aria-label="Foundry">
-          <span className="display text-[1.35rem] leading-none tracking-[-0.02em] text-[var(--ink)]">
+        <Link to="/" className="group flex items-center gap-2.5 no-underline" aria-label="Foundry">
+          <img
+            src="/rust-icon.svg"
+            alt=""
+            width={22}
+            height={22}
+            className="shrink-0 transition group-hover:rotate-[-6deg]"
+          />
+          <span className="display text-[1.4rem] font-bold leading-none tracking-[-0.02em] text-[var(--ink)]">
             Foundry
           </span>
           <span className="display-italic text-[1.05rem] leading-none text-[var(--ember)]">

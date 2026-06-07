@@ -1,6 +1,6 @@
 import type { Cell } from '#/state/notebook'
 import { AnsiOutput } from './AnsiOutput'
-import { cn } from '#/lib/utils'
+import { cn } from '@workspace/ui/utils'
 
 type Props = { cell: Cell }
 type OutputBlockProps = { chunk: Cell['output'][number] }

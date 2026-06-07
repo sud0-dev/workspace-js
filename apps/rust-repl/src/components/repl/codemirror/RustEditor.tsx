@@ -141,5 +141,5 @@ export function RustEditor({ value, onChange, onRun, onRunAndAdd, disabled }: Pr
     })
   }, [disabled, readOnlyComp])
 
-  return <div ref={hostRef} className="cm-host" />
+  return <div ref={hostRef} className="cm-host h-full overflow-hidden" />
 }

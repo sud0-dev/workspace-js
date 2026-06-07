@@ -1,0 +1,14 @@
+# sud0.dev
+
+> Side projects by Naman, pair-programmed with Claude. A small list of weekend-scale experiments that actually shipped. Built on a Bun monorepo, deployed to Cloudflare Workers.
+
+Maintained by [Naman](https://insanenaman.com). Source in [sud0-dev/workspace-js](https://github.com/sud0-dev/workspace-js).
+
+## Live projects
+
+- [Foundry — Rust REPL in your browser](https://foundry-rs.sud0.dev): TanStack Start + CodeMirror 6 + IndexedDB cache, compiles via play.rust-lang.org through a Cloudflare Worker.
+
+## About
+
+- [Author — insanenaman.com](https://insanenaman.com)
+- [Monorepo source](https://github.com/sud0-dev/workspace-js)

@@ -1,0 +1,33 @@
+name = "sud0-crates"
+compatibility_date = "2026-06-06"
+compatibility_flags = ["nodejs_compat"]
+main = "@tanstack/react-start/server-entry"
+
+routes = [
+  { pattern = "crates.sud0.dev", custom_domain = true },
+]
+
+[observability]
+enabled = true
+
+# ── Secrets (NOT committed) ────────────────────────────────────────────────
+# Set once per environment:
+#   bunx wrangler secret put CRATES_CONTACT_EMAIL
+# Exposed to outbound User-Agent we send to crates.io so they can reach us
+# rather than block our traffic if it ever needs adjustment.
+
+# ── KV: snapshot index ──────────────────────────────────────────────────────
+# Populated by the daily cron (see src/server/cron.ts). The runtime falls back
+# to this snapshot if the live crates.io API is blocked/throttled.
+# Create once per environment:
+#   bunx wrangler kv namespace create CRATES_INDEX
+# then paste the returned id below.
+# [[kv_namespaces]]
+# binding = "CRATES_INDEX"
+# id = "<paste-after-creation>"
+
+# ── Cron: daily snapshot refresh ────────────────────────────────────────────
+# 04:00 UTC: pull crates.io daily db-dump, extract crates.csv + versions.csv,
+# write slim per-crate JSON to KV. See src/server/cron.ts for the handler.
+[triggers]
+crons = ["0 4 * * *"]
