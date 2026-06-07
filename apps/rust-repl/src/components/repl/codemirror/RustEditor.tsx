@@ -110,7 +110,6 @@ export function RustEditor({ value, onChange, onRun, onRunAndAdd, disabled }: Pr
         EditorView.updateListener.of((u) => {
           if (u.docChanged) onChangeRef.current(u.state.doc.toString())
         }),
-        EditorView.lineWrapping,
       ],
     })
 
@@ -142,5 +141,5 @@ export function RustEditor({ value, onChange, onRun, onRunAndAdd, disabled }: Pr
     })
   }, [disabled, readOnlyComp])
 
-  return <div ref={hostRef} className="cm-host" />
+  return <div ref={hostRef} className="cm-host h-full overflow-hidden" />
 }

@@ -10,6 +10,7 @@ export const foundryTheme = EditorView.theme(
       backgroundColor: 'transparent',
       fontFamily: 'var(--font-mono)',
       fontFeatureSettings: '"zero", "ss01"',
+      height: '100%',
     },
     '&.cm-focused': {
       outline: 'none',
@@ -18,6 +19,7 @@ export const foundryTheme = EditorView.theme(
       fontFamily: 'var(--font-mono)',
       lineHeight: '1.6',
       fontVariantNumeric: 'tabular-nums',
+      overflow: 'auto',
     },
     '.cm-content': {
       caretColor: 'var(--ember)',

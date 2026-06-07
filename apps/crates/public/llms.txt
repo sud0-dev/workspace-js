@@ -1,0 +1,21 @@
+# crates.sud0.dev
+
+> A faster UI for the Rust crate registry. Drop-in alternative to crates.io — replace `crates.io` with `crates.sud0.dev` in any URL and get a denser, faster, keyboard-first page. Same data, sourced via the public crates.io API and daily database dump.
+
+Maintained by [Naman](https://insanenaman.com). Source in [sud0-dev/workspace-js](https://github.com/sud0-dev/workspace-js).
+
+## Features
+
+- Instant search across the crate registry (pre-indexed from the daily database dump).
+- Dense package detail pages: README, versions, dependencies, features, downloads.
+- Keyboard-first navigation (`/` to search).
+- URL-compatible: `crates.io/crates/<name>` ↔ `crates.sud0.dev/<name>`.
+
+## Reference
+
+- [Home / search](https://crates.sud0.dev/)
+- [Example crate page — serde](https://crates.sud0.dev/serde)
+
+## Data source
+
+All data comes from the public crates.io API and the daily database dump distributed at `https://static.crates.io/db-dump.tar.gz`. We comply with the [crates.io crawler policy](https://crates.io/data-access): descriptive User-Agent, ≤ 1 req/sec aggregate.
