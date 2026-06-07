@@ -2,9 +2,9 @@ import { useStore } from '@tanstack/react-store'
 import { notebookStore, actions, type Cell as CellT, type CellStatus } from '#/state/notebook'
 import { RustEditor } from './codemirror/RustEditor'
 import { CellOutput } from './CellOutput'
-import { Button } from '#/components/ui/button'
+import { Button } from '@workspace/ui/button'
 import { cancelCell, runCell } from '#/lib/runner'
-import { cn } from '#/lib/utils'
+import { cn } from '@workspace/ui/utils'
 
 type Props = {
   cellId: string
@@ -47,7 +47,7 @@ export function Cell({ cellId }: Props) {
 
       <div className="min-w-0">
         {/* editor area */}
-        <div className="group/editor relative">
+        <div className="group/editor relative h-[clamp(8rem,calc(min(40vh,38ch)),34rem)]">
           <RustEditor
             value={cell.source}
             onChange={(s) => actions.updateSource(cell.id, s)}

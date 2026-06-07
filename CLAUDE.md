@@ -74,6 +74,29 @@ grep -E '^[A-Z_][A-Z0-9_]*=' .env.example | cut -d= -f1
 
 ---
 
+## Filesystem scoping — never search outside the workspace
+
+- **Never run `find /`, `find /Users`, `find ~`, or any other root-anchored or home-anchored filesystem walk.** macOS TCC fires "process tried to access X" alerts when *any* process enumerates protected folders (Documents, Downloads, Desktop, Library, Proton Pass, browser profiles, `~/.ssh`, `~/.aws`, …). Even with `2>/dev/null` suppressing the visible error, the OS still notifies the user and the attempt looks like exfiltration.
+- **Always anchor searches at the workspace root** (`find . …`) or at a specific known subtree (`find node_modules/<pkg> …`, `find apps/<app> …`).
+- **If you need to inspect a package's source** and the installed `node_modules` copy doesn't expose it, use `WebFetch` against the package's GitHub README/source — don't trawl the filesystem for other installed copies.
+- **Same rule for `grep`, `rg`, `ls -R`, `tree`.** Recursive listings respect the same scope.
+
+```bash
+# Bad — walks the entire home directory, trips TCC, alarms the user
+find /Users -name "*.lock" -type f
+grep -r "TODO" ~/
+
+# Bad — silently scans protected folders because the error suppressor hides the alert
+find /Users -path "*node_modules/react-router*" 2>/dev/null
+
+# Good — scoped to the workspace
+find . -name "*.lock" -type f
+grep -r "TODO" apps/
+
+# Good — scoped to a specific package when you actually need its internals
+find node_modules/react-resizable-panels -name "*.d.ts"
+```
+
 ## Dependencies & supply chain
 
 - **Prefer zero new deps.** Supply-chain attacks (typosquatting, post-install scripts, hijacked maintainers) are active. Every new transitive package = attack surface in CI, dev, and bundle.

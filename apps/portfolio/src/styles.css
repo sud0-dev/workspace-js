@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+/* Scan the shared UI package — Tailwind v4 ignores node_modules by default. */
+@source "../../../packages/ui/src/**/*.{ts,tsx}";
+
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Single dark theme by default. Light mode flips to a readable inverse. */
+:root {
+  --paper:           oklch(0.13 0.012 250);
+  --paper-tinted:    oklch(0.16 0.014 250);
+  --ink:             oklch(0.96 0.005 250);
+  --ink-soft:        oklch(0.72 0.008 245);
+  --ink-faint:       oklch(0.48 0.008 245);
+  --rule:            oklch(0.25 0.010 250);
+  --rule-strong:     oklch(0.36 0.012 250);
+
+  /* Phosphor green — the signature */
+  --ember:           oklch(0.82 0.17 145);
+  --ember-soft:      color-mix(in oklab, oklch(0.82 0.17 145) 14%, transparent);
+  --ember-glow:      color-mix(in oklab, oklch(0.82 0.17 145) 50%, transparent);
+
+  /* Secondary accent — amber, for hover/highlight differentiation */
+  --amber:           oklch(0.80 0.16 75);
+
+  --stderr:          oklch(0.72 0.20 25);
+  --ok:              var(--ember);
+
+  --surface:         oklch(0.15 0.013 250 / 0.85);
+  --surface-strong:  oklch(0.15 0.013 250 / 0.96);
+  --gutter:          var(--paper-tinted);
+  --kicker:          var(--ember);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"],
+.light:not([data-theme="dark"]):not(.dark) {
+  --paper:           oklch(0.985 0.003 250);
+  --paper-tinted:    oklch(0.96 0.004 250);
+  --ink:             oklch(0.18 0.010 250);
+  --ink-soft:        oklch(0.42 0.010 250);
+  --ink-faint:       oklch(0.62 0.010 250);
+  --rule:            oklch(0.86 0.005 250);
+  --rule-strong:     oklch(0.72 0.008 250);
+  --ember:           oklch(0.50 0.16 145);
+  --ember-soft:      color-mix(in oklab, oklch(0.50 0.16 145) 12%, transparent);
+  --ember-glow:      color-mix(in oklab, oklch(0.50 0.16 145) 36%, transparent);
+  --amber:           oklch(0.55 0.16 75);
+  --surface:         oklch(1 0 0 / 0.85);
+  --surface-strong:  oklch(1 0 0 / 0.96);
+  --gutter:          var(--paper-tinted);
+  --kicker:          var(--ember);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { min-height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background-color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Signature scanline overlay — subtle CRT/console flavor without skeuomorphism */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    color-mix(in oklab, var(--ink) 4%, transparent) 2px,
+    color-mix(in oklab, var(--ink) 4%, transparent) 3px
+  );
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+}
+
+/* Phosphor glow around the page edge in dark mode only */
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(circle at 50% -10%, color-mix(in oklab, var(--ember) 8%, transparent), transparent 55%),
+    radial-gradient(circle at 50% 110%, color-mix(in oklab, var(--ember) 5%, transparent), transparent 55%);
+}
+
+:root[data-theme="light"] body::after,
+.light:not([data-theme="dark"]):not(.dark) body::after {
+  display: none;
+}
+
+#app, main, header, footer, nav { position: relative; z-index: 1; }
+
+a { color: var(--ember); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--amber); }
+
+::selection { background: var(--ember-soft); color: var(--ink); }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+
+/* ---- atoms ---- */
+
+.mono { font-family: var(--font-mono); }
+.sans { font-family: var(--font-sans); }
+
+.kicker {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  font-size: 0.7rem;
+  color: var(--ember);
+}
+
+.display {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.display-italic {
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* The signature: a blinking phosphor block cursor */
+@keyframes phosphor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: -0.12em;
+  background: var(--ember);
+  box-shadow: 0 0 8px var(--ember-glow);
+  animation: phosphor-blink 1.05s steps(1) infinite;
+}
+
+/* Project line marquee underline on hover — like an active terminal selection */
+.line {
+  position: relative;
+}
+.line::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: var(--ember);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.line:hover::after { transform: scaleX(1); }
+
+/* "$" prompt sigil for terminal feel */
+.prompt::before {
+  content: "$ ";
+  color: var(--ember);
+  font-weight: 700;
+}
+
+/* tag chip */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  border-radius: 3px;
+  white-space: nowrap;
+}

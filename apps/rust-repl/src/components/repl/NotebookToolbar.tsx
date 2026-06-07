@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useStore } from '@tanstack/react-store'
 import { notebookStore, actions } from '#/state/notebook'
-import { Button } from '#/components/ui/button'
+import { Button } from '@workspace/ui/button'
 import { buildShareLink } from '#/lib/shareLink'
 
 export function NotebookToolbar() {
@@ -21,7 +21,7 @@ export function NotebookToolbar() {
   }
 
   return (
-    <div className="sticky top-14 z-20 -mx-px border-y border-[var(--rule)] bg-[color-mix(in_oklab,var(--paper)_92%,transparent)] backdrop-blur">
+    <div className="border-y border-[var(--rule)] bg-[var(--paper-tinted)]">
       <div className="flex items-center gap-4 px-6 py-2.5">
         <div className="flex items-baseline gap-2">
           <span className="display-italic text-[1.15rem] leading-none text-[var(--ink)]">
