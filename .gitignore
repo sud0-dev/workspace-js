@@ -1,14 +1,29 @@
 node_modules
 .DS_Store
+
+# Env / secrets — never commit
 .env
 .env.local
 .env.*.local
+
+# Build artifacts
 dist
 build
-.vercel
 .output
 .nitro
 .cache
 .turbo
-*.log
+.vercel
 .vinxi
+
+# Cloudflare Wrangler / Miniflare local state (per-machine, regenerated)
+.wrangler
+
+# Logs
+*.log
+
+# OS / editor
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
