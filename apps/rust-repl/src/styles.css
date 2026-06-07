@@ -1,0 +1,247 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap");
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-ember-50:  oklch(0.97 0.02  60);
+  --color-ember-100: oklch(0.92 0.06  55);
+  --color-ember-300: oklch(0.80 0.13  50);
+  --color-ember-500: oklch(0.69 0.18  45);
+  --color-ember-600: oklch(0.62 0.19  42);
+  --color-ember-700: oklch(0.52 0.17  40);
+
+  --color-coal-50:   oklch(0.97 0.005 60);
+  --color-coal-100:  oklch(0.93 0.007 55);
+  --color-coal-200:  oklch(0.86 0.009 50);
+  --color-coal-300:  oklch(0.72 0.010 50);
+  --color-coal-400:  oklch(0.55 0.011 48);
+  --color-coal-500:  oklch(0.40 0.012 46);
+  --color-coal-600:  oklch(0.30 0.013 44);
+  --color-coal-700:  oklch(0.22 0.014 42);
+  --color-coal-800:  oklch(0.17 0.013 40);
+  --color-coal-900:  oklch(0.13 0.012 38);
+  --color-coal-950:  oklch(0.09 0.010 36);
+}
+
+/* ----- light: warm paper / blueprint of an engineer's notebook ----- */
+:root {
+  --paper:           oklch(0.985 0.012 80);
+  --paper-tinted:    oklch(0.965 0.018 75);
+  --ink:             oklch(0.20 0.020 40);
+  --ink-soft:        oklch(0.42 0.015 45);
+  --ink-faint:       oklch(0.60 0.013 50);
+  --rule:            oklch(0.85 0.010 55);
+  --rule-strong:     oklch(0.70 0.012 50);
+  --hairline:        color-mix(in oklab, var(--ink) 8%, transparent);
+  --ember:           var(--color-ember-600);
+  --ember-soft:      color-mix(in oklab, var(--color-ember-500) 14%, transparent);
+  --ember-glow:      color-mix(in oklab, var(--color-ember-500) 32%, transparent);
+  --stderr:          oklch(0.50 0.18 25);
+  --ok:              oklch(0.48 0.13 145);
+  --surface:         oklch(1   0     0 / 0.72);
+  --surface-strong:  oklch(1   0     0 / 0.92);
+  --gutter:          oklch(0.94 0.020 70);
+  --kicker:          oklch(0.45 0.018 45);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"],
+.dark {
+  --paper:           var(--color-coal-900);
+  --paper-tinted:    var(--color-coal-800);
+  --ink:             oklch(0.95 0.012 70);
+  --ink-soft:        oklch(0.78 0.010 60);
+  --ink-faint:       oklch(0.58 0.010 55);
+  --rule:            oklch(0.30 0.012 45);
+  --rule-strong:     oklch(0.42 0.012 45);
+  --hairline:        color-mix(in oklab, white 10%, transparent);
+  --ember:           var(--color-ember-500);
+  --ember-soft:      color-mix(in oklab, var(--color-ember-500) 18%, transparent);
+  --ember-glow:      color-mix(in oklab, var(--color-ember-500) 40%, transparent);
+  --stderr:          oklch(0.72 0.18 25);
+  --ok:              oklch(0.78 0.14 150);
+  --surface:         color-mix(in oklab, var(--color-coal-800) 90%, transparent);
+  --surface-strong:  color-mix(in oklab, var(--color-coal-800) 98%, transparent);
+  --gutter:          var(--color-coal-800);
+  --kicker:          oklch(0.78 0.06 60);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:           var(--color-coal-900);
+    --paper-tinted:    var(--color-coal-800);
+    --ink:             oklch(0.95 0.012 70);
+    --ink-soft:        oklch(0.78 0.010 60);
+    --ink-faint:       oklch(0.58 0.010 55);
+    --rule:            oklch(0.30 0.012 45);
+    --rule-strong:     oklch(0.42 0.012 45);
+    --hairline:        color-mix(in oklab, white 10%, transparent);
+    --ember:           var(--color-ember-500);
+    --ember-soft:      color-mix(in oklab, var(--color-ember-500) 18%, transparent);
+    --ember-glow:      color-mix(in oklab, var(--color-ember-500) 40%, transparent);
+    --stderr:          oklch(0.72 0.18 25);
+    --ok:              oklch(0.78 0.14 150);
+    --surface:         color-mix(in oklab, var(--color-coal-800) 90%, transparent);
+    --surface-strong:  color-mix(in oklab, var(--color-coal-800) 98%, transparent);
+    --gutter:          var(--color-coal-800);
+    --kicker:          oklch(0.78 0.06 60);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body, #app { min-height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "ss02", "cv11";
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(1100px 700px at 0% -10%, var(--ember-soft), transparent 55%),
+    radial-gradient(900px 600px at 110% 8%, color-mix(in oklab, var(--ember) 9%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-tinted) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* paper grain — subtle multiply noise */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  opacity: 0.05;
+  background-image:
+    repeating-linear-gradient(0deg, currentColor 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+  color: var(--ink);
+}
+
+/* faint horizontal rule lines like an engineer's notebook */
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  opacity: 0.06;
+  background-image: linear-gradient(to bottom, transparent 0 31px, var(--ink) 31px 32px);
+  background-size: 100% 32px;
+  mask-image: linear-gradient(to bottom, transparent 0, black 120px, black calc(100% - 120px), transparent 100%);
+}
+
+#app, main, header, footer { position: relative; z-index: 1; }
+
+a { color: var(--ember); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--color-ember-700); }
+
+/* ------ atoms ------ */
+
+.kicker {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  font-size: 0.66rem;
+  color: var(--kicker);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.01em;
+}
+
+.display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 144;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "zero", "ss01";
+}
+
+.rule-h { border-top: 1px solid var(--rule); }
+.rule-v { border-left: 1px solid var(--rule); }
+.rule-double {
+  border-top: 1px solid var(--rule);
+  box-shadow: 0 2px 0 -1px var(--rule);
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* ember pulse on running cell */
+@keyframes ember-pulse {
+  0%, 100% { box-shadow: inset 3px 0 0 0 var(--ember), 0 0 0 0 transparent; }
+  50%      { box-shadow: inset 3px 0 0 0 var(--ember), -1px 0 12px 0 var(--ember-glow); }
+}
+
+.is-running .cell-gutter { animation: ember-pulse 1.4s ease-in-out infinite; }
+
+/* stamp animation for cache-hit */
+@keyframes stamp-in {
+  0%   { opacity: 0; transform: rotate(-8deg) scale(1.25); }
+  40%  { opacity: 0.7; }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+.stamp { animation: stamp-in 280ms cubic-bezier(0.2, 1.2, 0.4, 1) both; }
+
+/* rise-in for staggered loads */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rise-in { animation: rise-in 540ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* selection */
+::selection {
+  background: var(--ember-soft);
+  color: var(--ink);
+}
+
+/* scrollbar — slim & quiet */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* focus rings — ember, sharp */
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* code blocks inside ANSI output preserve mono */
+.ansi { font-family: var(--font-mono); white-space: pre-wrap; line-height: 1.55; }
+.ansi-bright-black { color: var(--ink-faint); }
+.ansi-red, .ansi-bright-red { color: var(--stderr); }
+.ansi-green, .ansi-bright-green { color: var(--ok); }
+.ansi-yellow, .ansi-bright-yellow { color: var(--color-ember-500); }
+.ansi-blue, .ansi-bright-blue { color: oklch(0.65 0.13 240); }
+.ansi-magenta, .ansi-bright-magenta { color: oklch(0.65 0.16 320); }
+.ansi-cyan, .ansi-bright-cyan { color: oklch(0.70 0.10 200); }
+.ansi-bold { font-weight: 700; }
+.ansi-italic { font-style: italic; }
+.ansi-underline { text-decoration: underline; }

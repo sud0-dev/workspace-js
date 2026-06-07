@@ -1,0 +1,30 @@
+# Foundry
+
+> A Rust REPL in your browser. Two modes — single-file editor and notebook of cells. Source persists locally; identical re-runs are served from an in-tab IndexedDB cache; the compile hop goes to play.rust-lang.org through a Cloudflare Worker.
+
+Foundry is a small editorial-industrial Rust playground built on TanStack Start, CodeMirror 6, Tailwind 4, and IndexedDB. It runs SSR + streaming server functions on Cloudflare Workers and ships a Service Worker for offline use.
+
+## Modes
+
+- [Editor (single file)](https://foundry-rs.sud0.dev/): one full-height Rust file, run with Shift+Enter, output streams beside.
+- [Notebook (cells)](https://foundry-rs.sud0.dev/notebook): multiple cells, each with its own output, shared session id.
+
+## Reference
+
+- [About — stack and architecture](https://foundry-rs.sud0.dev/about): full stack list, how each compile request flows, credits.
+- [GitHub](https://github.com/insanenaman/foundry-rs): source code.
+
+## How a run works
+
+1. Source is sent from the browser to a TanStack Start server function (running on a Cloudflare Worker).
+2. The Worker POSTs to `https://play.rust-lang.org/execute` with `{ channel: "stable", mode: "debug", edition: "2021", crateType: "bin", code }`.
+3. The Worker yields a typed event stream back to the browser: `started → stderr → stdout → done`.
+4. On a clean exit, the event sequence is stored in IndexedDB keyed by a hash of the source. Subsequent identical runs replay from cache with zero network.
+
+## Self-hosting the compile backend
+
+Foundry's compile endpoint is configurable via the `FOUNDRY_COMPILE_URL` env var. Any service that speaks the play.rust-lang.org `/execute` JSON contract (e.g. a self-hosted `rust-lang/rust-playground` Docker container) drops in.
+
+## Credits
+
+Built by [Naman](https://insanenaman.com), pair-programmed with Cursor.

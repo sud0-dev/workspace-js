@@ -1,0 +1,15 @@
+name = "foundry-rs"
+compatibility_date = "2026-06-06"
+compatibility_flags = ["nodejs_compat"]
+main = "@tanstack/react-start/server-entry"
+
+routes = [
+  { pattern = "foundry-rs.sud0.dev", custom_domain = true },
+]
+
+[observability]
+enabled = true
+
+# Configure the upstream compile endpoint here when self-hosting:
+# [vars]
+# FOUNDRY_COMPILE_URL = "https://your-playground.example.com/execute"
