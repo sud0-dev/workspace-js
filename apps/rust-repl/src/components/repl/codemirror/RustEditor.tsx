@@ -110,7 +110,6 @@ export function RustEditor({ value, onChange, onRun, onRunAndAdd, disabled }: Pr
         EditorView.updateListener.of((u) => {
           if (u.docChanged) onChangeRef.current(u.state.doc.toString())
         }),
-        EditorView.lineWrapping,
       ],
     })
 

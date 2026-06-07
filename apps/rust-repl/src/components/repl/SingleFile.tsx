@@ -53,7 +53,7 @@ export function SingleFile() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="border-b border-[var(--rule)] lg:border-b-0 lg:border-r">
+        <div className="h-[clamp(360px,calc(100vh-18rem),720px)] border-b border-[var(--rule)] lg:border-b-0 lg:border-r">
           <RustEditor
             value={state.source}
             onChange={scratchActions.updateSource}
@@ -63,7 +63,9 @@ export function SingleFile() {
           />
         </div>
 
-        <OutputPanel />
+        <div className="h-[clamp(360px,calc(100vh-18rem),720px)] overflow-auto">
+          <OutputPanel />
+        </div>
       </div>
 
       <StatusBar />
