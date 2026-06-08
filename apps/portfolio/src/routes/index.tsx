@@ -1,4 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+
+const ROLES = [
+  'developer learning rust',
+  'shipping rust on weekends',
+  'indiehacker playing with rust',
+] as const
+
+const TYPE_MS = 55
+const DELETE_MS = 28
+const HOLD_FULL_MS = 1700
+const HOLD_EMPTY_MS = 320
 
 type Project = {
   slug: string
@@ -114,27 +126,88 @@ function HomePage() {
   )
 }
 
+// Reserve width using the longest role so the line never reflows while typing.
+const LONGEST_ROLE = ROLES.reduce(
+  (a, b) => (b.length > a.length ? b : a),
+  ROLES[0],
+)
+
 function Hero() {
+  const role = useTypewriter(ROLES)
   return (
     <section className="mb-14">
       <p className="prompt mono mb-3 text-[0.78rem] text-[var(--ink-faint)]">
         whoami
       </p>
       <h1 className="display text-[clamp(1.6rem,3.4vw,2.4rem)] leading-[1.25] tracking-[-0.02em] text-[var(--ink)]">
-        naman <span className="text-[var(--ink-faint)]">/</span>{' '}
-        <span className="text-[var(--ember)]">indiehacker</span>{' '}
-        <span className="text-[var(--ink-faint)]">at</span>{' '}
-        <span className="text-[var(--ember)]">work</span>
-        <span className="cursor ml-2" aria-hidden />
+        <a
+          href="https://insanenaman.com"
+          target="_blank"
+          rel="noreferrer"
+          className="text-[var(--ink)]! no-underline transition-colors hover:text-[var(--ember)]! hover:underline focus-visible:text-[var(--ember)]! focus-visible:underline"
+        >
+          naman
+        </a>{' '}
+        <span className="text-[var(--ink-faint)]">/</span>{' '}
+        <span
+          className="text-[var(--ember)] relative inline-grid align-baseline"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span aria-hidden className="invisible col-start-1 row-start-1 whitespace-pre">
+            {LONGEST_ROLE}
+          </span>
+          <span className="col-start-1 row-start-1 whitespace-pre">
+            {role}
+            <span className="cursor ml-1" aria-hidden />
+          </span>
+        </span>
       </h1>
       <pre className="mono mt-5 max-w-[72ch] whitespace-pre-wrap text-[0.92rem] leading-[1.7] text-[var(--ink-soft)]">
-{`> indiehacker shipping side projects on weekends.
+{`> full stack developer shipping side projects on weekends.
 > mostly typescript. ${' '}some rust. each one shipped in a Bun monorepo
 > with Claude as my pair-programmer. some make it. some don’t.
 > what made it is below.`}
       </pre>
     </section>
   )
+}
+
+// SSR-safe: server and first client render show ROLES[0] fully typed (no
+// hydration jank). After mount, cycles type → hold → delete → next. If the
+// user prefers reduced motion, the effect bails and the first role stays.
+function useTypewriter(phrases: readonly string[]): string {
+  const [text, setText] = useState(phrases[0])
+  const [phraseIdx, setPhraseIdx] = useState(0)
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const current = phrases[phraseIdx]
+
+    if (!deleting && text === current) {
+      const t = window.setTimeout(() => setDeleting(true), HOLD_FULL_MS)
+      return () => window.clearTimeout(t)
+    }
+    if (deleting && text === '') {
+      const t = window.setTimeout(() => {
+        setDeleting(false)
+        setPhraseIdx((i) => (i + 1) % phrases.length)
+      }, HOLD_EMPTY_MS)
+      return () => window.clearTimeout(t)
+    }
+    const step = deleting ? DELETE_MS : TYPE_MS
+    const t = window.setTimeout(() => {
+      setText((prev) =>
+        deleting ? prev.slice(0, -1) : current.slice(0, prev.length + 1),
+      )
+    }, step)
+    return () => window.clearTimeout(t)
+  }, [text, deleting, phraseIdx, phrases])
+
+  return text
 }
 
 function Projects() {
