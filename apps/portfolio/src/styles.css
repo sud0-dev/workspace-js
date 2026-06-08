@@ -20,13 +20,13 @@
   --rule:            oklch(0.25 0.010 250);
   --rule-strong:     oklch(0.36 0.012 250);
 
-  /* Phosphor green — the signature */
-  --ember:           oklch(0.82 0.17 145);
-  --ember-soft:      color-mix(in oklab, oklch(0.82 0.17 145) 14%, transparent);
-  --ember-glow:      color-mix(in oklab, oklch(0.82 0.17 145) 50%, transparent);
+  /* Rust ember — the signature (forge-orange, the language's tone) */
+  --ember:           oklch(0.74 0.185 42);
+  --ember-soft:      color-mix(in oklab, oklch(0.74 0.185 42) 14%, transparent);
+  --ember-glow:      color-mix(in oklab, oklch(0.74 0.185 42) 50%, transparent);
 
-  /* Secondary accent — amber, for hover/highlight differentiation */
-  --amber:           oklch(0.80 0.16 75);
+  /* Secondary accent — amber-yellow, keeps WIP status visually distinct from LIVE */
+  --amber:           oklch(0.82 0.155 82);
 
   --stderr:          oklch(0.72 0.20 25);
   --ok:              var(--ember);
@@ -48,10 +48,10 @@
   --ink-faint:       oklch(0.62 0.010 250);
   --rule:            oklch(0.86 0.005 250);
   --rule-strong:     oklch(0.72 0.008 250);
-  --ember:           oklch(0.50 0.16 145);
-  --ember-soft:      color-mix(in oklab, oklch(0.50 0.16 145) 12%, transparent);
-  --ember-glow:      color-mix(in oklab, oklch(0.50 0.16 145) 36%, transparent);
-  --amber:           oklch(0.55 0.16 75);
+  --ember:           oklch(0.52 0.175 38);
+  --ember-soft:      color-mix(in oklab, oklch(0.52 0.175 38) 12%, transparent);
+  --ember-glow:      color-mix(in oklab, oklch(0.52 0.175 38) 36%, transparent);
+  --amber:           oklch(0.62 0.155 78);
   --surface:         oklch(1 0 0 / 0.85);
   --surface-strong:  oklch(1 0 0 / 0.96);
   --gutter:          var(--paper-tinted);
