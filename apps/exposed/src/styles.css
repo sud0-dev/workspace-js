@@ -171,6 +171,9 @@ a { color: var(--stamp); text-underline-offset: 3px; text-decoration-thickness: 
 .redact[data-open="false"] > .redact-val { color: transparent; }
 .redact[data-open="true"]::after { transform: scaleX(0); }
 
+/* block variant — lets long values (IPv6, GPU strings) wrap inside a column */
+.redact.redact-block { display: block; max-width: 100%; }
+
 /* key/value data row */
 .field {
   display: grid;
@@ -225,21 +228,15 @@ a { color: var(--stamp); text-underline-offset: 3px; text-decoration-thickness: 
   background: var(--stamp);
 }
 
-/* greeting IP — typewriter caret + a pulsing phosphor underline */
+/* greeting IP — typewriter caret + a pulsing phosphor underline that wraps
+   with the value (a full IPv6 must not overflow the hero on narrow screens) */
 .ip-glow {
-  position: relative;
-  white-space: nowrap;
+  word-break: break-all;
   text-shadow: 0 0 12px var(--stamp-glow);
-}
-.ip-glow::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: 2px;
-  background: var(--stamp);
-  box-shadow: 0 0 8px var(--stamp), 0 0 16px var(--stamp-glow);
+  text-decoration: underline;
+  text-decoration-color: var(--stamp);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
   animation: ip-underline 2.4s ease-in-out infinite;
 }
 .ip-caret {
@@ -253,8 +250,8 @@ a { color: var(--stamp); text-underline-offset: 3px; text-decoration-thickness: 
   animation: ip-blink 1s steps(1) infinite;
 }
 @keyframes ip-underline {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%, 100% { text-decoration-color: color-mix(in oklab, var(--stamp) 45%, transparent); }
+  50% { text-decoration-color: var(--stamp); }
 }
 @keyframes ip-blink {
   50% { opacity: 0; }
