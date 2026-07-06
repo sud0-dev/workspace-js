@@ -1,0 +1,7 @@
+# exposed.sud0.dev — privacy-awareness tool
+# Public, indexable. No user data is ever collected or stored.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://exposed.sud0.dev/sitemap.xml
