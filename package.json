@@ -10,12 +10,15 @@
     "build:rust-repl": "bun install --frozen-lockfile && bun --filter rust-repl build",
     "build:portfolio": "bun install --frozen-lockfile && bun --filter portfolio build",
     "build:crates":    "bun install --frozen-lockfile && bun --filter crates build",
+    "build:exposed":   "bun install --frozen-lockfile && bun --filter exposed build",
     "deploy:rust-repl": "bun run build:rust-repl && bun --filter rust-repl run deploy:wrangler",
     "deploy:portfolio": "bun run build:portfolio && bun --filter portfolio run deploy:wrangler",
     "deploy:crates":    "bun run build:crates    && bun --filter crates    run deploy:wrangler",
+    "deploy:exposed":   "bun run build:exposed   && bun --filter exposed   run deploy:wrangler",
     "dev:rust-repl": "bun --filter rust-repl dev",
     "dev:portfolio": "bun --filter portfolio dev",
     "dev:crates":    "bun --filter crates    dev",
+    "dev:exposed":   "bun --filter exposed   dev",
     "test": "bun --filter '*' run test",
     "typecheck": "bun --filter '*' run typecheck"
   }
