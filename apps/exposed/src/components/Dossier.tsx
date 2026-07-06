@@ -18,14 +18,14 @@ type MarqueeProps = { label: string; value: string | null; revealed: boolean }
 
 function Marquee({ label, value, revealed }: MarqueeProps) {
   return (
-    <div className="border-t border-[var(--rule)] py-2.5 first:border-t-0 sm:border-t-0 sm:border-l sm:pl-4 sm:first:border-l-0 sm:first:pl-0">
+    <div className="min-w-0 border-t border-[var(--rule)] py-2.5 first:border-t-0 sm:border-t-0 sm:border-l sm:pl-4 sm:first:border-l-0 sm:first:pl-0">
       <p className="mono text-[0.66rem] uppercase tracking-wider text-[var(--ink-faint)]">{label}</p>
-      <p className="display mt-1 text-[1.05rem] leading-tight text-[var(--ink)]">
+      <p className="display mt-1 text-[0.98rem] leading-tight text-[var(--ink)]">
         {value === null ? (
           <span className="text-[var(--ink-faint)]">unavailable</span>
         ) : (
-          <span className="redact" data-open={revealed}>
-            <span className="redact-val break-words">{value}</span>
+          <span className="redact redact-block" data-open={revealed}>
+            <span className="redact-val block break-all">{value}</span>
           </span>
         )}
       </p>
