@@ -30,6 +30,15 @@ const PROJECTS: Project[] = [
     status: 'building',
     stack: ['tanstack-start', 'cloudflare-workers', 'crates.io-api', 'rust'],
   },
+  {
+    slug: 'exposed',
+    name: 'exposed.sud0.dev',
+    tagline: 'Everything your browser reveals about you — a live privacy-awareness report.',
+    href: 'https://exposed.sud0.dev',
+    status: 'live',
+    stack: ['tanstack-start', 'cloudflare-workers', 'fingerprinting', 'privacy'],
+    shipped: '2026-07',
+  },
 ]
 
 export const Route = createFileRoute('/')({

@@ -1,0 +1,37 @@
+# exposed.sud0.dev
+
+> A privacy-awareness tool that shows visitors every piece of information their
+> browser reveals to any website — with no permission prompts. Everything is
+> computed client-side and nothing is stored or transmitted.
+
+## What it does
+
+- Reveals the data a website reads about you the instant a page loads: IP
+  address, coarse geolocation, ISP/ASN, device, OS, browser, screen, timezone,
+  language, GPU, and canvas/audio/WebGL fingerprints.
+- Estimates how unique your browser configuration is (bits of entropy → "1 in N").
+- Demonstrates permission-gated leaks (precise GPS, clipboard, motion sensors)
+  that a single "Allow" click exposes.
+- Explains countermeasures: tracker-blocking browsers, VPN/Tor, disabling WebRTC,
+  and denying permissions by default.
+
+## Privacy
+
+- No analytics, no cookies, no tracking.
+- Client-side readings never leave the visitor's browser.
+- Network/geo details come from the edge server that served the page — the same
+  details every website receives — and are not logged or stored.
+
+## Pages
+
+- [Home](https://exposed.sud0.dev/): the full browser exposure report and FAQ.
+
+## Tech
+
+- TanStack Start + React 19, Tailwind CSS 4, deployed on Cloudflare Workers.
+- Open source under the sud0-dev organization.
+
+## References
+
+- Privacy Guides — independent, non-profit privacy tooling and guides:
+  https://www.privacyguides.org/en/

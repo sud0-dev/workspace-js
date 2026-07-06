@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@source "../../../packages/ui/src/**/*.{ts,tsx}";
+
+@theme {
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Spline Sans Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── "Declassified surveillance file" ──────────────────────────────────────
+   Light = a cool bone case-file on a desk. Dark = the same file under a
+   monitoring console. Carbon redaction bars, evidence-stamp red, a cold
+   institutional cyan for anything that reads "verified / safe". */
+
+:root {
+  /* deep slate — the console */
+  --paper:           oklch(0.16 0.012 250);
+  --paper-tinted:    oklch(0.20 0.014 250);
+  --card:            oklch(0.19 0.013 250);
+
+  --ink:             oklch(0.95 0.006 240);
+  --ink-soft:        oklch(0.74 0.010 240);
+  --ink-faint:       oklch(0.55 0.012 245);
+
+  --rule:            oklch(0.30 0.014 250);
+  --rule-strong:     oklch(0.42 0.016 250);
+
+  /* carbon redaction bar */
+  --carbon:          oklch(0.11 0.010 250);
+
+  /* evidence stamp — red-orange */
+  --stamp:           oklch(0.63 0.19 32);
+  --stamp-soft:      color-mix(in oklab, oklch(0.63 0.19 32) 16%, transparent);
+  --stamp-glow:      color-mix(in oklab, oklch(0.63 0.19 32) 45%, transparent);
+
+  /* institutional cyan — "verified / harmless" */
+  --signal:          oklch(0.72 0.12 210);
+  --signal-soft:     color-mix(in oklab, oklch(0.72 0.12 210) 15%, transparent);
+
+  /* amber — "leak / high entropy" caution */
+  --warn:            oklch(0.78 0.14 80);
+  --warn-soft:       color-mix(in oklab, oklch(0.78 0.14 80) 15%, transparent);
+
+  --surface:         oklch(0.19 0.013 250 / 0.86);
+  --kicker:          var(--stamp);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"],
+.light:not([data-theme="dark"]):not(.dark) {
+  --paper:           oklch(0.925 0.008 90);
+  --paper-tinted:    oklch(0.895 0.010 90);
+  --card:            oklch(0.965 0.006 90);
+
+  --ink:             oklch(0.22 0.014 260);
+  --ink-soft:        oklch(0.42 0.014 260);
+  --ink-faint:       oklch(0.58 0.012 260);
+
+  --rule:            oklch(0.80 0.010 90);
+  --rule-strong:     oklch(0.64 0.012 90);
+
+  --carbon:          oklch(0.20 0.012 260);
+
+  --stamp:           oklch(0.52 0.20 30);
+  --stamp-soft:      color-mix(in oklab, oklch(0.52 0.20 30) 13%, transparent);
+  --stamp-glow:      color-mix(in oklab, oklch(0.52 0.20 30) 34%, transparent);
+
+  --signal:          oklch(0.50 0.12 220);
+  --signal-soft:     color-mix(in oklab, oklch(0.50 0.12 220) 12%, transparent);
+
+  --warn:            oklch(0.62 0.14 70);
+  --warn-soft:       color-mix(in oklab, oklch(0.62 0.14 70) 14%, transparent);
+
+  --surface:         oklch(0.965 0.006 90 / 0.9);
+  --kicker:          var(--stamp);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { min-height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  background-color: var(--paper);
+  /* faint grid — a technician's log sheet */
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--rule) 32%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--rule) 32%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--stamp); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+::selection { background: var(--stamp-soft); color: var(--ink); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+.mono { font-family: var(--font-mono); }
+.sans { font-family: var(--font-sans); }
+.tabular { font-variant-numeric: tabular-nums; }
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  font-size: 0.68rem;
+  color: var(--kicker);
+}
+
+/* stamp — the rubber-stamped label on a case file */
+.stamp {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--stamp);
+  border: 2px solid var(--stamp);
+  border-radius: 4px;
+  padding: 0.12em 0.45em;
+  display: inline-block;
+  transform: rotate(-3deg);
+  box-shadow: inset 0 0 0 1px var(--stamp-soft);
+}
+
+/* ── The signature: carbon redaction bar ──────────────────────────────────
+   A field the browser exposed, shown blacked-out until the file is
+   "declassified". The bar wipes away to reveal the value beneath. */
+.redact {
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+.redact > .redact-val {
+  transition: color 0.45s ease 0.15s;
+}
+.redact::after {
+  content: "";
+  position: absolute;
+  inset: -0.1em -0.35em;
+  background: var(--carbon);
+  border-radius: 2px;
+  transform-origin: left center;
+  transition: transform 0.55s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.redact[data-open="false"] > .redact-val { color: transparent; }
+.redact[data-open="true"]::after { transform: scaleX(0); }
+
+/* key/value data row */
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+  gap: 0.75rem 1.25rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--rule);
+}
+.field:first-child { border-top: none; }
+@media (max-width: 560px) {
+  .field { grid-template-columns: 1fr; gap: 0.15rem; padding: 0.55rem 0; }
+}
+
+.field-key {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.field-val {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  color: var(--ink);
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+/* entropy pip — how identifying a field is */
+.pip {
+  display: inline-block;
+  width: 0.4rem; height: 0.4rem;
+  border-radius: 999px;
+  margin-left: 0.1rem;
+  vertical-align: middle;
+}
+.pip-high { background: var(--stamp); box-shadow: 0 0 6px var(--stamp-glow); }
+.pip-med  { background: var(--warn); }
+.pip-low  { background: var(--signal); }
+
+.divider {
+  position: relative;
+  border-top: 1px solid var(--rule);
+  margin-block: 2.25rem;
+}
+.divider::before {
+  content: "";
+  position: absolute;
+  left: 0; top: -1.5px;
+  width: 2.75rem; height: 3px;
+  background: var(--stamp);
+}
+
+/* greeting IP — typewriter caret + a pulsing phosphor underline */
+.ip-glow {
+  position: relative;
+  white-space: nowrap;
+  text-shadow: 0 0 12px var(--stamp-glow);
+}
+.ip-glow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 2px;
+  background: var(--stamp);
+  box-shadow: 0 0 8px var(--stamp), 0 0 16px var(--stamp-glow);
+  animation: ip-underline 2.4s ease-in-out infinite;
+}
+.ip-caret {
+  display: inline-block;
+  width: 0.5ch;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.14em;
+  background: var(--stamp);
+  box-shadow: 0 0 8px var(--stamp-glow);
+  animation: ip-blink 1s steps(1) infinite;
+}
+@keyframes ip-underline {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes ip-blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .redact::after { transition: none; }
+  .redact > .redact-val { transition: none; }
+  .ip-glow::after { animation: none; }
+  .ip-caret { animation: none; }
+  * { scroll-behavior: auto !important; }
+}
